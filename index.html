@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Heart Rate Counter</title>
+  </head>
+  <body>
+    <div id="seconds">
+      Timer:
+      <div id="secondsValue">
+        0
+      </div>
+    </div>
+    <div id="clicks">
+      Beats:
+      <div id="clicksValue">
+        0
+      </div>
+    </div>
+    <button type="button" onclick="start()">Click every beat</button> <br /><br />
+    <button type="button" onclick="reset()">Stop counter</button> <br /><br />
+
+    <div id="record">
+      Record: <br /><br />
+    </div>
+
+    <script type="text/javascript">
+      var clicks = 0
+      var timerOn = false
+      var seconds = 0
+
+      var clicksText = document.getElementById("clicksValue")
+      var secondsText = document.getElementById("secondsValue")
+
+      //stop timer & reset clicks
+      function reset() {
+        if (timerOn == true) {
+          timerOn = false
+          clearInterval(timer)
+          clearInterval(secondTimer)
+          clicks = 0
+          clicksText.innerHTML = clicks
+          seconds = 0
+          secondsText.innerHTML = seconds
+        }
+      }
+
+      function timerFin() {
+        timerOn = false
+        clearInterval(timer)
+        clearInterval(secondTimer)
+
+        var time = new Date().toLocaleTimeString()
+        document.getElementById("record").innerHTML += "<div id='recordBPM'>BPM: "+clicks+"</div><div class='recordTime'>Time: "+time+"</div><br />"
+
+        clicks = 0
+        clicksText.innerHTML = clicks
+        seconds = 0
+        secondsText.innerHTML = seconds
+      }
+
+      function timerCounter() {
+        seconds += 1
+        secondsText.innerHTML = seconds
+      }
+
+      function start() {
+        if (timerOn == true) {
+          clicks += 1
+          clicksText.innerHTML = clicks
+        } else {
+          clicks += 1
+          clicksText.innerHTML = clicks
+          timerOn = true
+          timer = setInterval(timerFin, 60000)
+          seconds = 1
+          secondsText.innerHTML = seconds
+          secondTimer = setInterval(timerCounter, 1000)
+        }
+      }
+    </script>
+  </body>
+</html>
