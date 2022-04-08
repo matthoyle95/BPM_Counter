@@ -18,7 +18,7 @@
       </div>
     </div>
     <button type="button" onclick="start()">Click every beat</button> <br /><br />
-    <button type="button" onclick="reset()">Stop counter</button> <br /><br />
+    <button type="button" onclick="reset()">Stop / Rest</button> <br /><br />
 
     <div id="record">
       Record: <br /><br />
@@ -32,7 +32,6 @@
       var clicksText = document.getElementById("clicksValue")
       var secondsText = document.getElementById("secondsValue")
 
-      //stop timer & reset clicks
       function reset() {
         if (timerOn == true) {
           timerOn = false
@@ -59,11 +58,6 @@
         secondsText.innerHTML = seconds
       }
 
-      function timerCounter() {
-        seconds += 1
-        secondsText.innerHTML = seconds
-      }
-
       function start() {
         if (timerOn == true) {
           clicks += 1
@@ -75,7 +69,10 @@
           timer = setInterval(timerFin, 60000)
           seconds = 1
           secondsText.innerHTML = seconds
-          secondTimer = setInterval(timerCounter, 1000)
+          secondTimer = setInterval(function() {
+            seconds += 1
+            secondsText.innerHTML = seconds
+          }), 1000)
         }
       }
     </script>
